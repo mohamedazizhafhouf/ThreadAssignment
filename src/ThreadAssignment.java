@@ -1,8 +1,12 @@
 public class ThreadAssignment {
 
     static class Counter {
-        void count() {
+        synchronized void count() {
             //todo implement me
+            for (int i=350;i>0;i--){
+                System.out.println(i);
+            }
+            System.out.println("FINISH !");
         }
     }
 
@@ -19,10 +23,16 @@ public class ThreadAssignment {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Counter counter = new Counter();
 
-        new MyThread(counter).start();
-        new MyThread(counter).start();
+        MyThread t1 = new MyThread(counter);
+        MyThread t2 = new MyThread(counter);
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+
+        System.out.println("DONE !");
     }
 }
